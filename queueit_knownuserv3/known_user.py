@@ -1,9 +1,9 @@
-from user_in_queue_service import UserInQueueService
-from user_in_queue_state_cookie_repository import UserInQueueStateCookieRepository
-from queueit_helpers import QueueitHelpers
-from models import Utils, KnownUserError, ActionTypes, RequestValidationResult, QueueEventConfig, CancelEventConfig
-from integration_config_helpers import IntegrationEvaluator
-from connector_diagnostics import ConnectorDiagnostics
+from .user_in_queue_service import UserInQueueService
+from .user_in_queue_state_cookie_repository import UserInQueueStateCookieRepository
+from .queueit_helpers import QueueitHelpers
+from .models import Utils, KnownUserError, ActionTypes, RequestValidationResult, QueueEventConfig, CancelEventConfig
+from .integration_config_helpers import IntegrationEvaluator
+from .connector_diagnostics import ConnectorDiagnostics
 import json
 import sys
 

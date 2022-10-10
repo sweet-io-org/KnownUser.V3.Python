@@ -1,6 +1,6 @@
-from models import RequestValidationResult, ActionTypes, Utils
-from queue_url_params import QueueUrlParams
-from queueit_helpers import QueueitHelpers
+from .models import RequestValidationResult, ActionTypes, Utils
+from .queue_url_params import QueueUrlParams
+from .queueit_helpers import QueueitHelpers
 
 
 class UserInQueueService:

@@ -1,9 +1,9 @@
 # KnownUser.V3.Python
 Before getting started please read the [documentation](https://github.com/queueit/Documentation/tree/main/serverside-connectors) to get acquainted with server-side connectors.
 
-Connector was developed and verified with Python v.2.7 and Django v.1.8. Please reach out to us if you are using another web framework, so we add it to the supported providers.
+This Connector was developed and verified with Python v.2.7 and Django v.1.8, but has since been converted to Python 3.
 
-You can find the latest released version [here](https://github.com/queueit/KnownUser.V3.Python/releases/latest)
+You can find the latest released version from Queue-It [here](https://github.com/queueit/KnownUser.V3.Python/releases/latest)
 
 ## Implementation
 The KnownUser validation must be done on *all requests except requests for static and cached pages, resources like images, css files and ...*. 
