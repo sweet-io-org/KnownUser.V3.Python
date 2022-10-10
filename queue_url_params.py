@@ -16,11 +16,11 @@ class QueueUrlParams:
     KEY_VALUE_SEPARATOR_CHAR = '_'
     TIMESTAMP_KEY = "ts"
     COOKIE_VALIDITY_MINUTES_KEY = "cv"
-    EVENT_ID_KEY = "e"
+    EVENT_ID_KEY = "e"  # The waiting room's lifetime is an "event".
     EXTENDABLE_COOKIE_KEY = "ce"
     HASH_KEY = "h"
-    QUEUE_ID_KEY = "q"
-    REDIRECT_TYPE_KEY = "rt"  # Redirection parameter, as discussed in 5.3.5.4.
+    QUEUE_ID_KEY = "q"  # A unique identifier for a specific user in a specific queue / "event". See 5.3.5.1.
+    REDIRECT_TYPE_KEY = "rt"  # Redirection parameter
 
     def __init__(self):
         self.timeStamp = 0
