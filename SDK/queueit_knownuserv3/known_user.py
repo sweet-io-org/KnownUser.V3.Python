@@ -55,7 +55,7 @@ class KnownUser:
             return
 
         cookie_value = ''
-        for k, v in debug_entries.iteritems():
+        for k, v in debug_entries.items():
             cookie_value += (k + '=' + str(v) + '|')
 
         cookie_value = cookie_value.strip('|')
@@ -252,7 +252,7 @@ class KnownUser:
                 http_context_provider, debug_entries, connector_diagnostics.isEnabled)
         except Exception as e:
             if connector_diagnostics.isEnabled:
-                debug_entries["Exception"] = e.message
+                debug_entries["Exception"] = str(e)
             raise e
         finally:
             KnownUser.__setDebugCookie(debug_entries, http_context_provider)
@@ -323,7 +323,7 @@ class KnownUser:
                 return result
         except Exception as e:
             if connector_diagnostics.isEnabled:
-                debug_entries["Exception"] = e.message
+                debug_entries["Exception"] = str(e)
             raise e
         finally:
             KnownUser.__setDebugCookie(debug_entries, http_context_provider)
@@ -342,7 +342,7 @@ class KnownUser:
                 http_context_provider, debug_entries, connector_diagnostics.isEnabled)
         except Exception as e:
             if connector_diagnostics.isEnabled:
-                debug_entries["Exception"] = e.message
+                debug_entries["Exception"] = str(e)
             raise e
         finally:
             KnownUser.__setDebugCookie(debug_entries, http_context_provider)

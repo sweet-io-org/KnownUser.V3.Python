@@ -260,8 +260,8 @@ class TestKnownUser(unittest.TestCase):
         try:
             KnownUser.cancelRequestByLocalConfig("http://test.com?event1=true", queueit_token,
                                                  None, "customerId", secret_key, hcp_mock)
-        except KnownUserError as err:
-            error_thrown = err.message.startswith("cancelConfig can not be none.")
+        except LookupError as err:
+            error_thrown = str(err).endswith("cancelConfig can not be none.")
             assert error_thrown
 
         expected_cookie_value = "RequestHttpHeader_Via=v" + \
@@ -338,8 +338,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.cancelRequestByLocalConfig(
                 "targetUrl", "token", cancelConfig, "customerId", "secretKey",
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "cancelConfig.queueDomain can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "cancelConfig.queueDomain can not be none or empty."
 
         assert error_thrown
 
@@ -353,8 +353,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.cancelRequestByLocalConfig(
                 "targetUrl", "token", cancelConfig, "customerId", "secretKey",
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "cancelConfig.eventId can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "cancelConfig.eventId can not be none or empty."
 
         assert error_thrown
 
@@ -365,8 +365,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.cancelRequestByLocalConfig("targetUrl", "token", None,
                                                  "customerId", "secretKey",
                                                  HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "cancelConfig can not be none."
+        except LookupError as err:
+            error_thrown = str(err) == "cancelConfig can not be none."
 
         assert error_thrown
 
@@ -378,8 +378,8 @@ class TestKnownUser(unittest.TestCase):
                                                  CancelEventConfig(), None,
                                                  "secretKey",
                                                  HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "customerId can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "customerId can not be none or empty."
 
         assert error_thrown
 
@@ -391,8 +391,8 @@ class TestKnownUser(unittest.TestCase):
                                                  CancelEventConfig(),
                                                  "customerId", None,
                                                  HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "secretKey can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "secretKey can not be none or empty."
 
         assert error_thrown
 
@@ -404,8 +404,8 @@ class TestKnownUser(unittest.TestCase):
                                                  CancelEventConfig(),
                                                  "customerId", None,
                                                  HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "targetUrl can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "targetUrl can not be none or empty."
 
         assert error_thrown
 
@@ -414,8 +414,8 @@ class TestKnownUser(unittest.TestCase):
 
         try:
             KnownUser.extendQueueCookie(None, 10, "cookieDomain", False, False, "secretkey", {})
-        except KnownUserError as err:
-            error_thrown = err.message == "eventId can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "eventId can not be none or empty."
 
         assert error_thrown
 
@@ -424,8 +424,8 @@ class TestKnownUser(unittest.TestCase):
 
         try:
             KnownUser.extendQueueCookie("eventId", 10, "cookieDomain", False, False, None, {})
-        except KnownUserError as err:
-            error_thrown = err.message == "secretKey can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "secretKey can not be none or empty."
 
         assert error_thrown
 
@@ -434,8 +434,8 @@ class TestKnownUser(unittest.TestCase):
 
         try:
             KnownUser.extendQueueCookie("eventId", "invalidInt", "cookieDomain", False, False, "secrettKey", {})
-        except KnownUserError as err:
-            error_thrown = err.message == "cookieValidityMinute should be integer greater than 0."
+        except LookupError as err:
+            error_thrown = str(err) == "cookieValidityMinute should be integer greater than 0."
 
         assert error_thrown
 
@@ -444,8 +444,8 @@ class TestKnownUser(unittest.TestCase):
 
         try:
             KnownUser.extendQueueCookie("eventId", -1, "cookieDomain", False, False, "secrettKey", {})
-        except KnownUserError as err:
-            error_thrown = err.message == "cookieValidityMinute should be integer greater than 0."
+        except LookupError as err:
+            error_thrown = str(err) == "cookieValidityMinute should be integer greater than 0."
 
         assert error_thrown
 
@@ -479,8 +479,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queue_config, "customerid",
                 "secretkey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "queueConfig.eventId can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "queueConfig.eventId can not be none or empty."
 
         assert error_thrown
 
@@ -501,8 +501,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queue_config, "customerid", None,
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "secretKey can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "secretKey can not be none or empty."
 
         assert error_thrown
 
@@ -523,8 +523,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queueConfig, "customerid",
                 "secretkey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "queueConfig.queueDomain can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "queueConfig.queueDomain can not be none or empty."
 
         assert error_thrown
 
@@ -545,8 +545,8 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queue_config, None, "secretKey",
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "customerId can not be none or empty."
+        except LookupError as err:
+            error_thrown = str(err) == "customerId can not be none or empty."
 
         assert error_thrown
 
@@ -566,8 +566,8 @@ class TestKnownUser(unittest.TestCase):
         try:
             KnownUser.resolveQueueRequestByLocalConfig("targeturl", "queueIttoken", queue_config, "customerId",
                                                        "secretKey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message == "queueConfig.extendCookieValidity should be valid boolean."
+        except LookupError as err:
+            error_thrown = str(err) == "queueConfig.extendCookieValidity should be valid boolean."
 
         assert error_thrown
 
@@ -588,9 +588,9 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queue_config, "customerId",
                 "secretKey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message.startswith(
-                "queueConfig.cookieValidityMinute should be integer greater than 0"
+        except LookupError as err:
+            error_thrown = str(err).endswith(
+                "queueConfig.cookieValidityMinute should be integer greater than 0."
             )
 
         assert error_thrown
@@ -612,9 +612,9 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig(
                 "targeturl", "queueIttoken", queue_config, "customerId",
                 "secretKey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message.startswith(
-                "queueConfig.cookieValidityMinute should be integer greater than 0"
+        except LookupError as err:
+            error_thrown = str(err).endswith(
+                "queueConfig.cookieValidityMinute should be integer greater than 0."
             )
 
         assert error_thrown
@@ -696,8 +696,8 @@ class TestKnownUser(unittest.TestCase):
         expected_server_time = QueueitHelpers.getCurrentTimeAsIso8601Str()
         try:
             result = KnownUser.resolveQueueRequestByLocalConfig("url", queueit_token, None, "id", secret_key, hcp_mock)
-        except KnownUserError as err:
-            error_thrown = err.message.startswith("queueConfig can not be none.")
+        except LookupError as err:
+            error_thrown = str(err).endswith("queueConfig can not be none.")
             assert error_thrown
 
         expected_cookie_value = "RequestHttpHeader_Via=v" + \
@@ -840,9 +840,9 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.validateRequestByIntegrationConfig(
                 "", "queueIttoken", "{}", "customerId", "secretKey",
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message.startswith(
-                "currentUrlWithoutQueueITToken can not be none or empty")
+        except LookupError as err:
+            error_thrown = str(err).endswith(
+                "currentUrlWithoutQueueITToken can not be none or empty.")
 
         assert error_thrown
 
@@ -854,9 +854,9 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.validateRequestByIntegrationConfig(
                 "currentUrlWithoutQueueITToken", "queueIttoken", "{}",
                 "customerId", "secretKey", HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message.startswith(
-                "integrationsConfigString can not be none or empty")
+        except LookupError as err:
+            error_thrown = str(err).endswith(
+                "integrationsConfigString can not be none or empty.")
 
         assert error_thrown
 
@@ -869,8 +869,8 @@ class TestKnownUser(unittest.TestCase):
                 "currentUrlWithoutQueueITToken", "queueIttoken",
                 "{}", "customerId", "secretKey",
                 HttpContextProviderMock())
-        except KnownUserError as err:
-            error_thrown = err.message.startswith("integrationsConfigString can not be none or empty.")
+        except Exception as err:
+            error_thrown = str(err).endswith("integrationsConfigString can not be none or empty.")
 
         assert error_thrown
 
@@ -1236,8 +1236,8 @@ class TestKnownUser(unittest.TestCase):
         try:
             KnownUser.validateRequestByIntegrationConfig("http://test.com?event1=true", queueit_token,
                                                          integration_config_json, "customerId", secret_key, hcp_mock)
-        except KnownUserError as err:
-            error_thrown = err.message.startswith("integrationsConfigString can not be none or empty.")
+        except LookupError as err:
+            error_thrown = str(err).endswith("integrationsConfigString can not be none or empty.")
             assert error_thrown
 
         expected_cookie_value = "RequestHttpHeader_Via=v" + \
@@ -1809,7 +1809,7 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.cancelRequestByLocalConfig("targetUrl", "token", cancel_config,
                                                  "customerId", "secretKey", HttpContextProviderMock())
         except Exception as e:
-            assert (e.message == "Exception")
+            assert (str(e) == "Exception")
 
         assert (len(user_in_queue_service.validateCancelRequestCalls) > 0)
         assert (len(hcp_mock.setCookies) == 0)
@@ -1842,7 +1842,7 @@ class TestKnownUser(unittest.TestCase):
             KnownUser.resolveQueueRequestByLocalConfig("target", "token", queue_config, "id", "key",
                                                        HttpContextProviderMock())
         except Exception as e:
-            assert (e.message == "Exception")
+            assert (str(e) == "Exception")
 
         assert (len(user_in_queue_service.validateQueueRequestCalls) > 0)
         assert (len(hcp_mock.setCookies) == 0)
@@ -1894,7 +1894,7 @@ class TestKnownUser(unittest.TestCase):
                                                          integration_config_json, "customerid", "secretkey",
                                                          HttpContextProviderMock())
         except Exception as e:
-            assert (e.message == "Exception")
+            assert (str(e) == "Exception")
 
         assert (len(user_in_queue_service.validateCancelRequestCalls) > 0)
         assert (len(hcp_mock.setCookies) == 0)
