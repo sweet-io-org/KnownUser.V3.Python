@@ -1,3 +1,5 @@
+from typing import Optional
+
 from .models import Utils as Utils
 
 
@@ -34,7 +36,7 @@ class QueueUrlParams:
         self.redirectType = None  # See RedirectionParam
 
     @staticmethod
-    def extractQueueParams(queueit_token) -> "QueueUrlParams":
+    def extractQueueParams(queueit_token) -> Optional["QueueUrlParams"]:
         result = QueueUrlParams()
         if Utils.isNilOrEmpty(queueit_token):
             return None
