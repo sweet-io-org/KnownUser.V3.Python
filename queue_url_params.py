@@ -1,6 +1,16 @@
 from .models import Utils as Utils
 
 
+class RedirectionParam:
+    # This is discussed in section 5.3.5.4 of the Technical Integration document, version 5.1.3.
+    QUEUE = "Queue"  # The user is being redirected from the queue
+    SAFETY_NET = "SafetyNet"  # The target URL is only peak-protected, and the protection is not currently active
+    AFTER_EVENT = "AfterEvent"  # The waiting room is dead
+    DISABLED = "Disabled"
+    DIRECT_LINK = "DirectLink"  # The user has not been through the waiting room
+    IDLE = "Idle"  # The waiting room was idle
+
+
 class QueueUrlParams:
     KEY_VALUE_SEPARATOR_GROUP_CHAR = '~'
     KEY_VALUE_SEPARATOR_CHAR = '_'
@@ -10,7 +20,7 @@ class QueueUrlParams:
     EXTENDABLE_COOKIE_KEY = "ce"
     HASH_KEY = "h"
     QUEUE_ID_KEY = "q"
-    REDIRECT_TYPE_KEY = "rt"
+    REDIRECT_TYPE_KEY = "rt"  # Redirection parameter, as discussed in 5.3.5.4.
 
     def __init__(self):
         self.timeStamp = 0
@@ -21,10 +31,10 @@ class QueueUrlParams:
         self.queueITToken = ""
         self.queueITTokenWithoutHash = ""
         self.queueId = ""
-        self.redirectType = None
+        self.redirectType = None  # See RedirectionParam
 
     @staticmethod
-    def extractQueueParams(queueit_token):
+    def extractQueueParams(queueit_token) -> "QueueUrlParams":
         result = QueueUrlParams()
         if Utils.isNilOrEmpty(queueit_token):
             return None
