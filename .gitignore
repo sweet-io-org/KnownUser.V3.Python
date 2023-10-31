@@ -1,7 +1,9 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-*.pyc
+﻿*.pyc
 /.vs
 .idea
+
+# Build artifacts
+queueit_knownuser_v3.egg-info/
+build
+dist
+
