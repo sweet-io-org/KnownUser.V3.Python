@@ -9,6 +9,7 @@ from queueit_knownuserv3.known_user import KnownUser
 from queueit_knownuserv3.user_in_queue_service import UserInQueueService
 from queueit_knownuserv3.http_context_providers import HttpContextProvider
 from queueit_knownuserv3.queueit_helpers import QueueitHelpers
+from queueit_knownuserv3.token_generation import generate_safetynet_token
 
 
 class HttpContextProviderMock(HttpContextProvider):
@@ -105,26 +106,7 @@ class UserInQueueServiceMock(UserInQueueService):
 class QueueITTokenGenerator:
     @staticmethod
     def generateDebugToken(event_id, secret_key, expired_token=False):
-        time_stamp = QueueitHelpers.getCurrentTime() + (3 * 60)
-        queue_id = str(uuid.uuid4())  # The identifier for a user in a queue.
-        if expired_token:
-            time_stamp = time_stamp - 1000
-        token_without_hash = (
-                                     QueueUrlParams.EVENT_ID_KEY +
-                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
-                                     event_id) + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
-                                     QueueUrlParams.QUEUE_ID_KEY +
-                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
-                                     queue_id) + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
-                                     QueueUrlParams.REDIRECT_TYPE_KEY +
-                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
-                                     "safetynet") + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
-                                     QueueUrlParams.TIMESTAMP_KEY +
-                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR + str(time_stamp))
-
-        hash_value = QueueitHelpers.hmacSha256Encode(token_without_hash, secret_key)
-        token = token_without_hash + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + QueueUrlParams.HASH_KEY + QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR + hash_value
-        return token
+        return generate_safetynet_token(event_id, secret_key=secret_key, expired_token=expired_token)
 
 
 class TestKnownUser(unittest.TestCase):
