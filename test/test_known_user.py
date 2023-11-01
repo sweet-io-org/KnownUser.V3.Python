@@ -1,6 +1,7 @@
 import unittest
 import json
 import sys
+import uuid
 
 from queueit_knownuserv3.queue_url_params import QueueUrlParams
 from queueit_knownuserv3.models import *
@@ -105,14 +106,19 @@ class QueueITTokenGenerator:
     @staticmethod
     def generateDebugToken(event_id, secret_key, expired_token=False):
         time_stamp = QueueitHelpers.getCurrentTime() + (3 * 60)
+        queue_id = str(uuid.uuid4())  # The identifier for a user in a queue.
         if expired_token:
             time_stamp = time_stamp - 1000
         token_without_hash = (
                                      QueueUrlParams.EVENT_ID_KEY +
                                      QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
                                      event_id) + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
+                                     QueueUrlParams.QUEUE_ID_KEY +
+                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
+                                     queue_id) + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
                                      QueueUrlParams.REDIRECT_TYPE_KEY +
-                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR + "debug") + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
+                                     QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR +
+                                     "safetynet") + QueueUrlParams.KEY_VALUE_SEPARATOR_GROUP_CHAR + (
                                      QueueUrlParams.TIMESTAMP_KEY +
                                      QueueUrlParams.KEY_VALUE_SEPARATOR_CHAR + str(time_stamp))
 
