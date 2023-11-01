@@ -7,7 +7,7 @@ with open('README.md', 'r') as input:
 
 setup(
     name='queueit_knownuser_v3',
-    version="1.0.0",
+    version="1.1.0",
     description='A Python implementation of Queue-It\'s KnownUser V3',
     long_description=long_description,
     keywords='queue sweet',
@@ -29,6 +29,6 @@ setup(
     package_dir={'queueit_knownuserv3': '.'},  # Map package name to root directory
     py_modules=['connector_diagnostics', 'http_context_providers', 'integration_config_helpers', 'known_user', 'models',
                 'queue_url_params', 'queueit_helpers', 'user_in_queue_service',
-                'user_in_queue_state_cookie_repository'],
+                'user_in_queue_state_cookie_repository', 'token_generation'],
     install_requires=[]
 )
